@@ -111,4 +111,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 
-STRIPE_API_KEY = "sk_test_51LOSd2IuIr8rFA9WcvHnrEQu5lolPA2CxwGo4LVmqgZ7lD03lCYvj7pggmcGRHiJyWcv4V7MycM7VzTqYK3hrcTf00bx4kmLX0"
+STRIPE_API_KEY = ""
