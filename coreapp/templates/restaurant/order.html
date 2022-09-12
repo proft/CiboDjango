@@ -1,0 +1,59 @@
+{% extends 'restaurant/base.html' %} 
+
+{% block title %} Order {% endblock title %} 
+
+{% block body %}
+<h1>Restaurant - Orders</h1>
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="card shadow text-white mb-3 mt-5">
+        <div class="card-header text-center">
+          <h5 class="m-0 font-weight-bold text-black">Orders</h5>
+        </div>
+        <div class="card-body">  
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Details</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Driver</th>
+                <th scope="col">Total</th>
+                <th scope="col">Staus</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              <tr class="align-middle">
+                <th scope="row">{{ order.id }}</th>
+                <td>
+                    <ul>
+                        {% for od in order.order_detals.all %}
+                            <li>{{ od.meal.name }} : ${{ od.meal.price }} x {{ od.quantity }} = $ {{ od.sub_total }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.driver }}</td>
+                <td class="text-end">${{ order.total }}</td>
+                <td>${{ order.get_status_display }}</td>
+                <td>
+                    {% if order.status == 1 %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ order.id }}">
+                        <button class="btn btn-black btn-sm">Ready</button>
+                    </form>
+                    {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

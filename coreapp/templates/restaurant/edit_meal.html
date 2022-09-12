@@ -1,0 +1,24 @@
+{% extends 'restaurant/base.html' %} 
+{% load bootstrap4 %}
+
+{% block title %} Edit Meal {% endblock title %} 
+
+{% block body %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card shadow text-white mb-3 mt-5">
+            <div class="card-header text-center">
+                <h5 class="m-0 font-weight-bold text-black">Meal</h5>
+            </div>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% bootstrap_form meal_form %}
+                    <button class="btn btn-black float-end" type="submit">Update</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+{% endblock body %}

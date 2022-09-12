@@ -1,0 +1,53 @@
+{% extends 'restaurant/layout.html' %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+        var now = new Date();
+        setInterval(function() {
+            $.ajax({
+                url: '/api/restaurant/order/notification/' + now.toISOString(),
+                method: 'GET',
+                success: function(data) {
+                    if (data['notification'] === 0) {
+                        $('.badge').text('');
+                    } else {
+                        $('.badge').text(data['notification']);
+                    }
+                }
+            })
+        }, 3000)
+    })
+</script>
+{% endblock script %}
+
+{% block sidebar %}
+
+{% url 'restaurant_meal' as restaurant_meal_url %}
+{% url 'restaurant_order' as restaurant_order_url %}
+{% url 'restaurant_report' as restaurant_report_url %}
+{% url 'restaurant_account' as restaurant_account_url %}
+
+<div class="text-center mt-4">
+    LOGO
+    <br>
+    <h5>{{ request.user.get_full_name }}</h5>
+    <h6>{{ request.user.restaurant.name }}</h6>
+</div>
+
+<hr>
+
+<div class="list-group">
+    <span class="text-uppercase">Dashboard</span>    
+    <a href="{% url 'restaurant_meal' %}" class="list-group-item {% if request.path == 'restaurant_meal_url' %}active{% endif %}">Meals</a>    
+    <a href="{% url 'restaurant_order' %}" class="list-group-item {% if request.path == 'restaurant_order_url' %}active{% endif %}">Order <span class="badge bg-warning ml-2"></span> </a>    
+    <a href="{% url 'restaurant_report' %}" class="list-group-item {% if request.path == 'restaurant_report_url' %}active{% endif %}">Report</a>
+    
+    <span class="text-uppercase">Profile</span>
+    <a href="{% url 'restaurant_account' %}" class="list-group-item {% if request.path == 'restaurant_account_url' %}active{% endif %}">Account</a>
+</div>
+
+<div class="text-center my-3 mx-3">
+    <a href="{% url 'restaurant_sign_up' %}" class="btn btn-warning btn-block">Logout</a>    
+</div>
+{% endblock sidebar %}
